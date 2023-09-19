@@ -5,36 +5,36 @@ import { Link } from 'react-router-dom';
 function Index(props) {
   // state to hold formData
   const [newForm, setNewForm] = useState({
-    name: '',
-    image: '',
-    title: '',
+    breed: '',
+    description: '',
+    age: 0,
   });
 
   // handleChange function for form
   const handleChange = (event) => {
     setNewForm((prevState) => ({
       ...prevState,
-      [event.target.name]: event.target.value,
+      [event.target.breed]: event.target.value,
     }));
   }
 
   // handle submit function for form
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.createPeople(newForm);
+    props.createCat(newForm);
     setNewForm({
-      name: '',
-      image: '',
-      title: '',
+      breed: '',
+      description: '',
+      age: 0,
     });
   };
 
   // loaded function
   const loaded = () => {
-    return props.people.map((person) => (
-      <div key={person._id} className="person">
-        <Link to={`/people/${person._id}`}>
-          <h1>{person.name}</h1>
+    return props.cats.map((cat) => (
+      <div key={cat._id} className="cat">
+        <Link to={`/cats/${cat._id}`}>
+          <h1>{cat.breed}</h1>
         </Link>
       </div>
     ));
@@ -45,32 +45,32 @@ function Index(props) {
   };
 
   return (
-    <section className="person-section">
+    <section className="cat-section">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          value={newForm.name}
-          name="name"
-          placeholder="name"
+          value={newForm.breed}
+          name="breed"
+          placeholder="breed"
           onChange={handleChange}
         />
         <input
           type="text"
-          value={newForm.image}
-          name="image"
-          placeholder="image URL"
+          value={newForm.description}
+          name="description"
+          placeholder="description"
           onChange={handleChange}
         />
         <input
           type="text"
-          value={newForm.title}
-          name="title"
-          placeholder="title"
+          value={newForm.age}
+          name="age"
+          placeholder="age"
           onChange={handleChange}
         />
-        <input type="submit" value="Create Person" />
+        <input type="submit" value="Create Cat" />
       </form>
-      {props.people ? loaded() : loading()}
+      {props.cats ? loaded() : loading()}
     </section>
   );
 }

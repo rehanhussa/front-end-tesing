@@ -4,57 +4,58 @@ import Index from '../pages/Index';
 import Show from '../pages/Show';
 
 function Main(props) {
-  const [people, setPeople] = useState(null);
+  const [cats, setCat] = useState(null);
 
-  const URL = `https://express-react-repo-88931931c007.herokuapp.com/people`;
+  const URL = `http://localhost:3001/api/cats`;
+  //change this to your own heroku backend url
 
-  const getPeople = async () => {
+  const getCat = async () => {
     try {
       const response = await fetch(URL);
       const data = await response.json();
-      setPeople(data);
+      setCat(data);
     } catch (error) {
       // TODO: Add a task we'd like to perform in the event of an error
     }
   };
 
-  const createPeople = async (person) => {
+  const createCat = async (cat) => {
     try {
       await fetch(URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'Application/json',
         },
-        body: JSON.stringify(person),
+        body: JSON.stringify(cat),
       });
-      getPeople();
+      getCat();
     } catch (error) {
       // TODO: Add a task we'd like to perform in the event of an error
     }
   };
 
-  const updatePeople = async (person) => {
-    console.log(person._id)
-    await fetch(URL + '/' + person._id, {
+  const updateCat = async (cat) => {
+    console.log(cat._id)
+    await fetch(URL + '/' + cat._id, {
       method: 'PUT',
       headers: {
         'Content-Type': 'Application/json',
       },
-      body: JSON.stringify(person),
+      body: JSON.stringify(cat),
     });
-    // update list of people
-    getPeople();
+    // update list of cat
+    getCat();
   };
 
-  const deletePeople = async (id) => {
+  const deleteCat = async (id) => {
     await fetch(URL + '/' + id, {
       method: 'DELETE',
     });
-    getPeople();
+    getCat();
   };
 
   useEffect(() => {
-    getPeople();
+    getCat();
   }, []);
 
   return (
@@ -64,18 +65,18 @@ function Main(props) {
           path="/" 
           element={
             <Index 
-              people={people} 
-              createPeople={createPeople} 
+              cats={cats} 
+              createCat={createCat} 
             />
           }
         />
         <Route
-            path="/people/:id"
+            path="/cats/:id"
             element={
                 <Show
-                people={people}
-                updatePeople={updatePeople}
-                deletePeople={deletePeople}
+                cats={cats}
+                updateCat={updateCat}
+                deleteCat={deleteCat}
                 />
             }
             />
